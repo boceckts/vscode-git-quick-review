@@ -10,14 +10,28 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-git-review.helloWorld"
+		"workspaceContains:.git"
 	],
 	"main": "./out/main/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "vscode-git-review.helloWorld",
-				"title": "Hello World"
+				"command": "vscode-git-review.start-review",
+				"title": "Git Review: Start"
+			},
+			{
+				"command": "vscode-git-review.stop-review",
+				"title": "Git Review: Stop"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "vscode-git-review.start-review",
+				"key": "alt+shift+s"
+			},
+			{
+				"command": "vscode-git-review.stop-review",
+				"key": "alt+shift+x"
 			}
 		]
 	},
