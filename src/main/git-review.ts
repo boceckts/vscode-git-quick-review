@@ -1,4 +1,4 @@
-import simpleGit, { SimpleGit, StatusResult, SimpleGitOptions } from 'simple-git';
+import simpleGit, { SimpleGit } from 'simple-git';
 
 export class GitReview {
 
@@ -14,19 +14,19 @@ export class GitReview {
     async getBranchChoices() {
         return this.git.fetch().branch().then(result => {
             this.originalBranch = result.current;
-            return result.all
+            return Object.values(result.branches).map(bs => bs.name.replace(/remotes\/(\w+)/g, `$1`));
         });
     }
     
     start(reviewBranch: string) {
         this.reviewBranch = reviewBranch;
         this.stashMessage = `VSCode Git-Review temporary stash for ${this.originalBranch} during review of ${this.reviewBranch}`;
-        this.git.stash(['push', '-m', this.stashMessage]).checkoutLocalBranch(this.reviewBranch).pull();
+        this.git.stash(['push', '-m', this.stashMessage]).checkout(this.reviewBranch).pull();
+        saveEditorState();
     }
     
     stop() {
         this.git.reset(['--hard', 'HEAD']).checkout(this.originalBranch).stash(['pop']);
-        // optionally delete review branch
     }
 
 }
