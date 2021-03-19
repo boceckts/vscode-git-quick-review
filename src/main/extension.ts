@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposableRevert = vscode.commands.registerCommand('vscode-git-review.stop-review', () => {
 
 		if (gitReview != null) {
-			gitReview.stop();
+			gitReview.finish();
 		} else {
 			vscode.window.showWarningMessage('Git-Review only works in a workspace.');
 		}
