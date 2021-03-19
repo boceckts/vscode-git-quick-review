@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { GitReview } from './git-review';
+import { GitReview, GitReviewBranch } from './git-review';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -58,11 +58,9 @@ export function getWorkspace() {
 	}
 }
 
-export function getReviewBranch(branches: Thenable<string[]>) {
+export async function getReviewBranch(branches: Thenable<GitReviewBranch[]>) {
 	const reviewBranch = vscode.window.showQuickPick(branches, {
-		placeHolder: "Select the git branch to review.",
+		placeHolder: "Select a remote git branch to review",
 		canPickMany: false});
-	return reviewBranch.then(result => {
-		return result?.trim();
-	})
+	return reviewBranch;
 }
