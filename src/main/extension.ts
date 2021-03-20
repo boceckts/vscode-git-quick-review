@@ -21,12 +21,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const branches = gitReview.getBranchChoices()
 
-			getReviewBranch(branches).then(reviewBranch => {
+			const reviewBranch = await getReviewBranch(branches).then();
 
-				if (reviewBranch != undefined) {
-					gitReview.start(reviewBranch);
-				}
-			})
+			if (reviewBranch != undefined) {
+				doWithErrorHandling(gitReview, gitReview.start, [reviewBranch]);
+			}
 
 		} else {
 			vscode.window.showWarningMessage('Git-Review only works in a workspace.');
@@ -38,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposableRevert = vscode.commands.registerCommand('vscode-git-review.stop-review', () => {
 
 		if (gitReview != null) {
-			gitReview.finish();
+			doWithErrorHandling(gitReview, gitReview.finish);
 		} else {
 			vscode.window.showWarningMessage('Git-Review only works in a workspace.');
 		}
@@ -64,4 +63,12 @@ export async function getReviewBranch(branches: Thenable<GitReviewBranch[]>) {
 		placeHolder: "Select a remote git branch to review",
 		canPickMany: false});
 	return reviewBranch;
+}
+
+export function doWithErrorHandling(gitReview: GitReview, action: Function, args: any[] = []) {
+	try {
+		action.call(gitReview, args);
+	} catch (error) {
+		vscode.window.showWarningMessage(error.message);
+	}
 }
