@@ -1,6 +1,6 @@
-# vscode-git-review README
+# vscode-git-quick-review README
 
-This is the README for your extension "vscode-git-review". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "vscode-git-quick-review". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

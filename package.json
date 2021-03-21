@@ -1,7 +1,7 @@
 {
-	"name": "vscode-git-review",
-	"displayName": "vscode-git-review",
-	"description": "Quickly switch to and from a branch you want to review without worrying about your current changes.",
+	"name": "vscode-git-quick-review",
+	"displayName": "vscode-git-quick-review",
+	"description": "Quickly switch to and from a branch you want to review without worrying about your current working state.",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.44.0"
@@ -16,21 +16,21 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "vscode-git-review.start-review",
+				"command": "vscode-git-quick-review.start-review",
 				"title": "Git Review: Start Review"
 			},
 			{
-				"command": "vscode-git-review.finish-review",
+				"command": "vscode-git-quick-review.finish-review",
 				"title": "Git Review: Finish Review"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "vscode-git-review.start-review",
+				"command": "vscode-git-quick-review.start-review",
 				"key": "alt+shift+s"
 			},
 			{
-				"command": "vscode-git-review.finish-review",
+				"command": "vscode-git-quick-review.finish-review",
 				"key": "alt+shift+x"
 			}
 		]

@@ -3,8 +3,8 @@ import { GitReviewStatus } from './git-review-status';
 
 export class CommandUtil {
 
-    static readonly START_REVIEW: string = 'vscode-git-review.start-review';
-    static readonly FINISH_REVIEW: string = 'vscode-git-review.finish-review';
+    static readonly START_REVIEW: string = 'vscode-git-quick-review.start-review';
+    static readonly FINISH_REVIEW: string = 'vscode-git-quick-review.finish-review';
 
     static startReview() {
         vscode.commands.executeCommand(CommandUtil.START_REVIEW);
@@ -30,7 +30,7 @@ export class CommandUtil {
         } else if (status == GitReviewStatus.IN_PROGRESS) {
             return 'Finish the git review which is currently in progress.';
         } else {
-            return 'Undfined git review status.';
+            return 'Undefined git review status.';
         }
     }
 
