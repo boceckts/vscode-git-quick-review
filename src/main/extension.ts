@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 				const reviewBranch = await getReviewBranch(branches).then();
 				
 				if (reviewBranch != undefined) {
-					doWithErrorHandling(gitReview, gitReview.start, [reviewBranch]);
+					gitReview.start(reviewBranch);
 				}
 
 			} else {
@@ -55,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (gitReview != null) {
 
 			if (gitReview.isReviewInProgress()) {
-				doWithErrorHandling(gitReview, gitReview.finish);
+				gitReview.finish();
 			} else {
 				const startAction = 'Start Git Review';
 				const action = vscode.window.showInformationMessage('Currently, there is no git review in progress. Do you want to start one now?', startAction);
@@ -91,12 +91,4 @@ export async function getReviewBranch(branches: Thenable<GitReviewBranch[]>) {
 		placeHolder: "Select a remote git branch to review",
 		canPickMany: false});
 	return reviewBranch;
-}
-
-export function doWithErrorHandling(gitReview: GitReview, action: Function, args: any[] = []) {
-	try {
-		action.call(gitReview, args);
-	} catch (error) {
-		vscode.window.showWarningMessage(error.message);
-	}
 }

@@ -1,7 +1,6 @@
 import simpleGit, { SimpleGit } from 'simple-git';
 import { GitReviewBranch } from './git-review-branch';
 import { GitReviewStatus } from './git-review-status';
-import { IllegalStateError } from './errors';
 
 export class GitReview {
     
@@ -25,6 +24,7 @@ export class GitReview {
     }
     
     start(gitReviewBranch: GitReviewBranch) {
+        console.log(this.reviewBranch?.label);
         this.reviewBranch = gitReviewBranch;
         this.toggleReviewStatus(GitReviewStatus.READY_FOR_REVIEW, GitReviewStatus.IN_PROGRESS);
         this.stashMessage = `VSCode Git-Review temporary stash for ${this.originalBranch} during review of ${this.reviewBranch.label}`;
@@ -44,11 +44,10 @@ export class GitReview {
     }
 
     private toggleReviewStatus(from: GitReviewStatus, to: GitReviewStatus) {
-        if (this.reviewStatus != from) {
-            throw new IllegalStateError(this.reviewStatus);
+        if (this.reviewStatus == from) {
+            this.reviewStatus = to;
+            this.onStatusChanged(this.reviewStatus);
         }
-        this.reviewStatus = to;
-        this.onStatusChanged(this.reviewStatus);
     }
     
     isReviewInProgress() {
