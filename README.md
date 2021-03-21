@@ -1,70 +1,45 @@
-# vscode-git-quick-review README
+# Git Quick Review for Visual Studio Code
 
-This is the README for your extension "vscode-git-quick-review". After writing up a brief description, we recommend including the following sections.
+[![Build Status](https://travis-ci.com/boceckts/vscode-git-quick-review.svg?token=peqtbSMtxkonhsy4FdNH&branch=main)](https://travis-ci.com/boceckts/vscode-git-quick-review)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## Features
-
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Quickly check out a remote git branch you want to review without worrying about your current working state. After finishing the review, you will be brought back to where you left off without losing any changes.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension only works when VSCode is openend in a workspace with an initialized git repository.
 
-## Extension Settings
+## Features
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+This extension let's you quickly check out a remote git branch you want to review without you having to worry about your current working state.
+Essentially, this plugin aims to provide a shortcut for the following workflow when doing a git review.
 
-For example:
+1) Quickly select and switch to a branch you want to review
+    - Save current changes
+    - Refresh the remote for the newest working states
+    - Find the branch you want to review
+    - Checkout the selected remote branch in detached mode
 
-This extension contributes the following settings:
+--- Unfortunately, you still need to perform the review by yourself ---
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+2) Quickly switch back to your original branch and working state
+    - discard any changes
+    - Checkout original branch you worked on
+    - Restore original working state
 
-## Known Issues
+## Usage
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Simply select the git quick review status bar icon on the bottom left which should say 'Start Review'. (Alternatively, open your command pallete and search for *Git Review*).
+2. Select the branch you want to review
+3. Perform your code review on the checked out branch
+4. Press the git quick review status bar icon again to finish a review which brings you back to your original branch and restores your previous work.
 
-## Release Notes
+![Git Quick Review](img/feature-preview.gif)
 
-Users appreciate release notes as you update your extension.
+## Change Log
 
-### 1.0.0
+The Change Log can be found [here](CHANGELOG.md).
 
-Initial release of ...
+## Contributing
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Fork the [repo](https://github.com/boceckts/vscode-git-quick-review), create a branch and submit pull requests.
