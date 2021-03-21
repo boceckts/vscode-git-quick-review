@@ -2,12 +2,37 @@
 	"name": "vscode-git-quick-review",
 	"displayName": "vscode-git-quick-review",
 	"description": "Quickly switch to and from a branch you want to review without worrying about your current working state.",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"publisher": "boceckts",
+	"author": "Tobias Boceck",
+	"icon": "img/git-quick-review.png",
+	"galleryBanner": {
+		"color": "#FFFFFF",
+		"theme": "light"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"readme": "README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/boceckts/vscode-git-quick-review"
+	},
+	"bugs": "https://github.com/boceckts/vscode-git-quick-review/issues",
+	"homepage": "https://github.com/boceckts/vscode-git-quick-review/blob/main/README.md",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
 	"categories": [
-		"Other"
+		"SCM Providers",
+		"Other",
+		"Programming Languages"
+	],
+	"keywords": [
+		"git",
+		"review",
+		"quick review",
+		"checkout",
+		"quick checkout",
+		"git shortcut"
 	],
 	"activationEvents": [
 		"workspaceContains:.git"
