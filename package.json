@@ -17,11 +17,11 @@
 		"commands": [
 			{
 				"command": "vscode-git-review.start-review",
-				"title": "Git Review: Start"
+				"title": "Git Review: Start Review"
 			},
 			{
-				"command": "vscode-git-review.stop-review",
-				"title": "Git Review: Stop"
+				"command": "vscode-git-review.finish-review",
+				"title": "Git Review: Finish Review"
 			}
 		],
 		"keybindings": [
@@ -30,7 +30,7 @@
 				"key": "alt+shift+s"
 			},
 			{
-				"command": "vscode-git-review.stop-review",
+				"command": "vscode-git-review.finish-review",
 				"key": "alt+shift+x"
 			}
 		]

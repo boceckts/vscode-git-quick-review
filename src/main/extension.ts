@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { GitReview } from './git-review';
 import { GitReviewBranch } from "./git-review-branch";
+import { CommandUtil } from './commands';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -15,16 +16,28 @@ export function activate(context: vscode.ExtensionContext) {
 		gitReview = new GitReview(cwd);
 	}
 
-	let disposableSwitch = vscode.commands.registerCommand('vscode-git-review.start-review', async () => {
+	let disposableSwitch = vscode.commands.registerCommand(CommandUtil.START_REVIEW, async () => {
 
 		if (gitReview != null) {
 
-			const branches = gitReview.getBranchChoices()
+			if (gitReview.isReadyForReview()) {
+				
+				const branches = gitReview.getBranchChoices()
+				
+				const reviewBranch = await getReviewBranch(branches).then();
+				
+				if (reviewBranch != undefined) {
+					doWithErrorHandling(gitReview, gitReview.start, [reviewBranch]);
+				}
 
-			const reviewBranch = await getReviewBranch(branches).then();
-
-			if (reviewBranch != undefined) {
-				doWithErrorHandling(gitReview, gitReview.start, [reviewBranch]);
+			} else {
+				const finishAction = 'Finish Git Review';
+				const action = vscode.window.showInformationMessage('A git review is currently in progress, please finish your current review befor starting a new one. Do you want to finish the review now?', finishAction);
+				action.then(action => {
+					if (action == finishAction) {
+						CommandUtil.finishReview();
+					}
+				})
 			}
 
 		} else {
@@ -34,10 +47,22 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(disposableSwitch);
 
-	let disposableRevert = vscode.commands.registerCommand('vscode-git-review.stop-review', () => {
+	let disposableRevert = vscode.commands.registerCommand(CommandUtil.FINISH_REVIEW, () => {
 
 		if (gitReview != null) {
-			doWithErrorHandling(gitReview, gitReview.finish);
+
+			if (gitReview.isReviewInProgress()) {
+				doWithErrorHandling(gitReview, gitReview.finish);
+			} else {
+				const startAction = 'Start Git Review';
+				const action = vscode.window.showInformationMessage('Currently, there is no git review in progress. Do you want to start one now?', startAction);
+				action.then(action => {
+					if (action == startAction) {
+						CommandUtil.startReview();
+					}
+				})
+			}
+
 		} else {
 			vscode.window.showWarningMessage('Git-Review only works in a workspace.');
 		}
