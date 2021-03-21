@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import { GitReview } from './git-review';
 import { GitReviewBranch } from "./git-review-branch";
 import { CommandUtil } from './commands';
+import { StatusBar } from './status-bar';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -14,6 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 	const cwd = getWorkspace();
 	if (cwd != null) {
 		gitReview = new GitReview(cwd);
+		const statusBar = new StatusBar();
+		gitReview.onStatusChanged = statusBar.updateStatus.bind(statusBar);
 	}
 
 	let disposableSwitch = vscode.commands.registerCommand(CommandUtil.START_REVIEW, async () => {

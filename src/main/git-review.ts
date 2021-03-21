@@ -10,6 +10,7 @@ export class GitReview {
     private originalBranch: string = 'main';
     private reviewBranch: GitReviewBranch | undefined;
     private stashMessage: string = '';
+	onStatusChanged: ((status: GitReviewStatus) => void) = () => {};
     
     constructor(workspace: string) {
         this.git = simpleGit(workspace);
@@ -47,6 +48,7 @@ export class GitReview {
             throw new IllegalStateError(this.reviewStatus);
         }
         this.reviewStatus = to;
+        this.onStatusChanged(this.reviewStatus);
     }
     
     isReviewInProgress() {
