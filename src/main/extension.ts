@@ -5,14 +5,16 @@ import { GitReview } from './git-review';
 import { GitReviewBranch } from "./git-review-branch";
 import { CommandUtil } from './commands';
 import { StatusBar } from './status-bar';
+import { WorkspaceUtil as GitWorkspace } from './git-workspace';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+	const gitWorkspace = new GitWorkspace();
 	let gitReview: GitReview;
 
-	const cwd = getWorkspace();
+	const cwd = gitWorkspace.getWorkspace();
 	if (cwd != null) {
 		gitReview = new GitReview(cwd);
 		const statusBar = new StatusBar();
@@ -30,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 				const reviewBranch = await getReviewBranch(branches).then();
 				
 				if (reviewBranch != undefined) {
-					gitReview.start(reviewBranch);
+					gitWorkspace.collectEditorState().then(() => gitReview.start(reviewBranch));
 				}
 
 			} else {
@@ -55,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (gitReview != null) {
 
 			if (gitReview.isReviewInProgress()) {
-				gitReview.finish();
+				gitReview.finish().then(() => gitWorkspace.restoreEditorState());
 			} else {
 				const startAction = 'Start Git Review';
 				const action = vscode.window.showInformationMessage('Currently, there is no git review in progress. Do you want to start one now?', startAction);
@@ -76,15 +78,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() { }
-
-export function getWorkspace() {
-	const workspaceFolders = vscode.workspace.workspaceFolders;
-	if (workspaceFolders != undefined && workspaceFolders?.length > 0) {
-		return workspaceFolders[0].uri.fsPath;
-	} else {
-		return null;
-	}
-}
 
 export async function getReviewBranch(branches: Thenable<GitReviewBranch[]>) {
 	const reviewBranch = vscode.window.showQuickPick(branches, {
