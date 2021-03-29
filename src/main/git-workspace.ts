@@ -17,9 +17,7 @@ export class WorkspaceUtil {
 
     async collectEditorState() {
         this.activeTextEditor = vscode.window.activeTextEditor?.document.fileName;
-        console.log(vscode.window.visibleTextEditors);
         this.visibleTextEditors = vscode.window.visibleTextEditors.map(editor => editor.document.fileName);
-        console.log(this.visibleTextEditors);
         return vscode.commands.executeCommand('workbench.action.closeAllEditors');
     }
 
