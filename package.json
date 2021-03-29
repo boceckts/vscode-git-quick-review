@@ -1,6 +1,6 @@
 {
 	"name": "vscode-git-quick-review",
-	"displayName": "vscode-git-quick-review",
+	"displayName": "Git Quick Review",
 	"description": "Quickly switch to and from a branch you want to review without worrying about your current working state.",
 	"version": "1.0.0",
 	"publisher": "boceckts",
@@ -72,7 +72,7 @@
 		"simple-git": "2.37.0"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.54.0",
+		"@types/vscode": "^1.44.0",
 		"@types/glob": "^7.1.3",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
